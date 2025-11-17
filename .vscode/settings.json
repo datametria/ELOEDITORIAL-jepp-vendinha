@@ -1,0 +1,22 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/Library": true,
+    "**/Temp": true,
+    "**/Obj": true,
+    "**/Build": true,
+    "**/Builds": true,
+    "**/Logs": true,
+    "**/UserSettings": true,
+    "**/*.csproj": true,
+    "**/*.sln": true
+  },
+  "search.exclude": {
+    "**/Library": true,
+    "**/Temp": true,
+    "**/Obj": true,
+    "**/Build": true,
+    "**/Builds": true
+  }
+}

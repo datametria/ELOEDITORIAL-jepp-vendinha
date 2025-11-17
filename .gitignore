@@ -1,0 +1,91 @@
+# Unity generated (NÃO versionar)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Asset meta data
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated meta files
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity3D generated file on crash reports
+sysinfo.txt
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics generated file
+crashlytics-build.properties
+
+# Packed Addressables
+[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Temporary auto-generated Android Assets
+[Aa]ssets/[Ss]treamingAssets/aa.meta
+[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Asset Store tools
+[Aa]ssets/AssetStoreTools*
+
+# Visual Studio (manter .vs/ ignorado)
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# IMPORTANTE: .amazonq, .github e .vscode DEVEM ser versionados
+# .amazonq/rules/memory/ - Memory Bank do projeto
+# .github/copilot-instructions.md - Instruções do Copilot
+# .vscode/ - Configurações do VSCode (se existir)
+
+# Gradle
+.gradle/
+
+# Crash reports
+*.stackdump
+
+# Rider
+.idea/
+*.sln.iml
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# OS generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build output
+Build/
+*.apk
+*.aab
+*.ipa
