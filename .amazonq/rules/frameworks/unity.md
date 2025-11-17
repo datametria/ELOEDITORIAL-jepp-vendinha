@@ -872,6 +872,208 @@ public class UserController : MonoBehaviour
 
 ---
 
+---
+
+## Rule 6: Mobile Input System (Touch + Virtual Joystick)
+
+### Contexto
+
+Jogos mobile 3D precisam de controles intuitivos. Input System legado não suporta touch moderno adequadamente.
+
+### Regra
+
+Jogos mobile DEVEM usar:
+- **New Input System**: Para controles modernos
+- **Virtual Joystick**: Para movimento do jogador
+- **Touch Input**: Para rotação de câmera e interação
+- **Deadzone**: Para evitar drift do joystick
+
+### Justificativa
+
+- Controles responsivos e precisos
+- Suporte nativo a multi-touch
+- Configuração flexível
+- Melhor UX para mobile
+
+### Quando Usar
+
+- ✅ Jogos mobile 3D (FPS, TPS, aventura)
+- ✅ Protótipos educacionais mobile
+- ✅ Experiências interativas 3D
+- ❌ Jogos 2D simples (usar Input System básico)
+- ❌ AR/VR (usar XR Interaction Toolkit)
+
+### Exemplos
+
+#### ✅ Correto (Virtual Joystick + Touch)
+
+```csharp
+// VirtualJoystick.cs
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+{
+    [Header("Joystick Settings")]
+    [SerializeField] private RectTransform joystickBackground;
+    [SerializeField] private RectTransform joystickHandle;
+    [SerializeField] private float handleRange = 50f;
+    [SerializeField] private float deadzone = 0.1f;
+    
+    private Vector2 inputVector;
+    
+    public Vector2 InputVector => inputVector;
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnDrag(eventData);
+    }
+    
+    public void OnDrag(PointerEventData eventData)
+    {
+        Vector2 position;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            joystickBackground,
+            eventData.position,
+            eventData.pressEventCamera,
+            out position
+        );
+        
+        position = Vector2.ClampMagnitude(position, handleRange);
+        joystickHandle.anchoredPosition = position;
+        
+        inputVector = position / handleRange;
+        
+        // Apply deadzone
+        if (inputVector.magnitude < deadzone)
+        {
+            inputVector = Vector2.zero;
+        }
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        inputVector = Vector2.zero;
+        joystickHandle.anchoredPosition = Vector2.zero;
+    }
+}
+
+// MobileFPSController_InputSystem.cs
+using UnityEngine;
+
+[RequireComponent(typeof(CharacterController))]
+public class MobileFPSController_InputSystem : MonoBehaviour
+{
+    [Header("References")]
+    [SerializeField] private VirtualJoystick joystick;
+    [SerializeField] private Camera playerCamera;
+    
+    [Header("Movement")]
+    [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float gravity = -9.81f;
+    
+    [Header("Camera")]
+    [SerializeField] private float lookSensitivity = 2f;
+    [SerializeField] private float maxLookAngle = 80f;
+    
+    private CharacterController controller;
+    private Vector3 velocity;
+    private float verticalRotation = 0f;
+    
+    private void Start()
+    {
+        controller = GetComponent<CharacterController>();
+    }
+    
+    private void Update()
+    {
+        HandleMovement();
+        HandleRotation();
+        ApplyGravity();
+    }
+    
+    private void HandleMovement()
+    {
+        Vector2 input = joystick.InputVector;
+        Vector3 move = transform.right * input.x + transform.forward * input.y;
+        controller.Move(move * moveSpeed * Time.deltaTime);
+    }
+    
+    private void HandleRotation()
+    {
+        // Touch input for camera rotation
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            
+            // Ignore if touching joystick area
+            if (IsOverJoystick(touch.position))
+                return;
+            
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector2 delta = touch.deltaPosition;
+                
+                // Horizontal rotation (Y axis)
+                transform.Rotate(Vector3.up * delta.x * lookSensitivity * Time.deltaTime);
+                
+                // Vertical rotation (X axis)
+                verticalRotation -= delta.y * lookSensitivity * Time.deltaTime;
+                verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
+                playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+            }
+        }
+    }
+    
+    private void ApplyGravity()
+    {
+        if (controller.isGrounded && velocity.y < 0)
+        {
+            velocity.y = -2f;
+        }
+        
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
+    
+    private bool IsOverJoystick(Vector2 touchPosition)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(
+            joystick.GetComponent<RectTransform>(),
+            touchPosition
+        );
+    }
+}
+```
+
+#### ❌ Incorreto (Input System Legado)
+
+```csharp
+public class PlayerController : MonoBehaviour
+{
+    private void Update()
+    {
+        // Input.GetAxis não funciona bem em mobile
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        
+        // Sem suporte a touch adequado
+        transform.Translate(h, 0, v);
+    }
+}
+```
+
+### Checklist
+
+- [ ] New Input System instalado?
+- [ ] Virtual Joystick implementado?
+- [ ] Touch input para câmera?
+- [ ] Deadzone configurado?
+- [ ] Testado em dispositivo real?
+- [ ] UI touch-friendly (botões grandes)?
+
+---
+
 ## Métricas de Conformidade
 
 | Métrica | Meta | Validação |
@@ -881,7 +1083,10 @@ public class UserController : MonoBehaviour
 | Object Pooling | 100% frequent objects | Profiler |
 | URP usage | 100% | Project settings |
 | async/await usage | 100% async ops | Code review |
+| Mobile Input System | 100% mobile games | Code review |
 
 ---
 
-**Próxima revisão:** 07/02/2026
+**Versão:** 1.1.0  
+**Última Atualização:** 17/11/2025  
+**Próxima revisão:** 17/02/2026

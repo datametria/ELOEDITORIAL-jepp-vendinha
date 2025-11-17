@@ -2,8 +2,8 @@
 
 > **Rule Master**: Índice central e referência principal para Amazon Q Developer
 
-**Versão:** 4.2.0
-**Data:** 07/11/2025
+**Versão:** 4.3.0
+**Data:** 17/11/2025
 **Autor:** Vander Loto - CTO DATAMETRIA
 **Baseado em:** AmazonQ-Guidelines v2.0
 
@@ -115,8 +115,9 @@ Este documento é o **ponto de entrada único** para o Amazon Q Developer e supe
 | **Docker** | [frameworks/docker.md](frameworks/docker.md) | ✅ Criado | Docker + Compose + Multi-stage + Security | 5 rules |
 | **Kubernetes** | [frameworks/kubernetes.md](frameworks/kubernetes.md) | ✅ Criado | K8s + Helm + Ingress + Monitoring | 5 rules |
 | **TypeScript** | [frameworks/typescript.md](frameworks/typescript.md) | ✅ Criado | TypeScript + ESLint + Prettier + Strict Mode | 5 rules |
+| **Unity** | [frameworks/unity.md](frameworks/unity.md) | ✅ Criado | Unity 6000+ + URP + New Input System + Mobile | 6 rules |
 
-**Total: 50 Framework Rules (10 frameworks × 5 rules)**
+**Total: 56 Framework Rules (10 frameworks × 5 rules + Unity 6 rules)**
 
 ---
 
@@ -144,9 +145,10 @@ Este documento é o **ponto de entrada único** para o Amazon Q Developer e supe
 | **🤖 Agents Development** | [stacks/datametria_std_agents_development.md](stacks/datametria_std_agents_development.md) | LangChain + OpenAI + Redis | 16 |
 | **📱 Mobile Native** | [stacks/datametria_std_mobile_native.md](stacks/datametria_std_mobile_native.md) | Swift + Kotlin + Native APIs | 6 |
 | **🎮 Unity AR/VR** | [stacks/datametria_std_unity_ar_vr.md](stacks/datametria_std_unity_ar_vr.md) | Unity + URP + XR Toolkit | 7 |
+| **🎮 Unity Mobile 3D** | [stacks/datametria_std_unity_mobile_3d.md](stacks/datametria_std_unity_mobile_3d.md) | Unity 6000+ + URP Mobile + Android/iOS | 6 |
 | **🎭 Interactive Avatars** | [stacks/datametria_std_interactive_avatars.md](stacks/datametria_std_interactive_avatars.md) | Ready Player Me + Inworld.ai + LangChain | 9 |
 
-**Total: 20 Standards Completos**
+**Total: 21 Standards Completos**
 
 ---
 
@@ -516,7 +518,7 @@ Formato: README.md com badges, comandos, pré-requisitos
 
 ---
 
-**Versão:** 4.2.0
-**Data:** 07/11/2025
-**Próxima revisão:** 07/02/2026
+**Versão:** 4.3.0
+**Data:** 17/11/2025
+**Próxima revisão:** 17/02/2026
 **Mantido por:** Vander Loto - CTO DATAMETRIA
